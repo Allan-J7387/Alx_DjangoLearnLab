@@ -270,3 +270,7 @@ SECURE_BROWSER_XSS_FILTER = True  # Enables browser XSS filtering
 
 # ✅ Host configuration
 ALLOWED_HOSTS = ['yourdomain.com']  # Replace with your production domain
+
+
+# Tell Django to trust the X-Forwarded-Proto header from the proxy
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
