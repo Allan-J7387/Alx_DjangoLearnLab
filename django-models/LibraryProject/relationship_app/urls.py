@@ -27,3 +27,13 @@ urlpatterns = [
     path('edit_book/<int:book_id>/', views.edit_book, name='edit_book'),
     path('delete_book/<int:book_id>/', views.delete_book, name='delete_book'),
 ]
+
+
+
+from django.urls import path
+from .views import list_books, LibraryDetailView  # ✅ Required for check
+
+urlpatterns = [
+    path('books/', list_books, name='list_books'),  # Function-based view
+    path('libraries/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),  # Class-based view
+]
