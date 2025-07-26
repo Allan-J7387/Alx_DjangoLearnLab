@@ -243,3 +243,30 @@ INSTALLED_APPS += ['csp']
 MIDDLEWARE += [
     'csp.middleware.CSPMiddleware',
 ]
+
+
+
+# SECURITY SETTINGS FOR PRODUCTION
+
+# 🚫 Never run with DEBUG=True in production
+DEBUG = False
+
+# ✅ Enforce HTTPS redirect
+SECURE_SSL_REDIRECT = True  # Redirect all HTTP traffic to HTTPS
+
+# ✅ HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 31536000  # 1 year in seconds
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Include subdomains in HSTS
+SECURE_HSTS_PRELOAD = True  # Allow browser preload list inclusion
+
+# ✅ Secure cookies (only sent over HTTPS)
+SESSION_COOKIE_SECURE = True  # Ensures session cookies are only sent over HTTPS
+CSRF_COOKIE_SECURE = True     # Ensures CSRF cookie is only sent over HTTPS
+
+# ✅ Security headers
+X_FRAME_OPTIONS = 'DENY'  # Prevents clickjacking
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevents content type sniffing
+SECURE_BROWSER_XSS_FILTER = True  # Enables browser XSS filtering
+
+# ✅ Host configuration
+ALLOWED_HOSTS = ['yourdomain.com']  # Replace with your production domain
