@@ -217,3 +217,29 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default auto field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+DEBUG = False
+
+ALLOWED_HOSTS = ['yourdomain.com']  # Replace with your production domain
+
+# Security Headers
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Use secure cookies (HTTPS only)
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# HSTS settings (optional but recommended)
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# CSP Middleware (see Step 4)
+INSTALLED_APPS += ['csp']
+MIDDLEWARE += [
+    'csp.middleware.CSPMiddleware',
+]
