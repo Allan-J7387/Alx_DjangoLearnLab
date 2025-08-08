@@ -30,3 +30,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/hello/', hello_api),
 ]
+
