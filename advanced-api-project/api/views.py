@@ -69,7 +69,7 @@ class BookDeleteView(generics.DestroyAPIView):
 permission_classes = [IsOwnerOrReadOnly]
 
 
-
+from rest_framework import generics
 from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Book
