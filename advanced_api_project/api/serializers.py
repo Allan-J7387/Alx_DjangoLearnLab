@@ -24,3 +24,10 @@ class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Author
         fields = ['id', 'name', 'books']
+
+
+class BookCreateView(generics.CreateAPIView):
+    ...
+    def perform_create(self, serializer):
+        # You can add custom logic here, e.g., attaching the user
+        serializer.save()  # Add more fields like: user=self.request.user
