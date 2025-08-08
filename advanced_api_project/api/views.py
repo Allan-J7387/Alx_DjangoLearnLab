@@ -65,3 +65,4 @@ class BookDeleteView(generics.DestroyAPIView):
 
 
 permission_classes = [IsOwnerOrReadOnly]
+
