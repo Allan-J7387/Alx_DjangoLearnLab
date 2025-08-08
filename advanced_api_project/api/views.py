@@ -1,6 +1,3 @@
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from django.shortcuts import render
 
-@api_view(['GET'])
-def hello_api(request):
-    return Response({"message": "Hello from DRF!"})
+# Create your views here.
