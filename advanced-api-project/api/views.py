@@ -1,3 +1,4 @@
+
 from rest_framework import viewsets
 from .models import Author, Book
 from .serializers import AuthorSerializer, BookSerializer
@@ -10,6 +11,7 @@ class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
+from django_filters import rest_framework
 from rest_framework import generics, permissions
 from .models import Book
 from .serializers import BookSerializer
