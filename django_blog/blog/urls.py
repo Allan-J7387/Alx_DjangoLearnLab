@@ -33,3 +33,18 @@ urlpatterns = [
     path('posts/<int:pk>/edit/', views.PostUpdateView.as_view(), name='post-edit'),
     path('posts/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post-delete'),
 ]
+
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    # List & detail views
+    path('', views.PostListView.as_view(), name='post-list'),
+    path('post/<int:pk>/', views.PostDetailView.as_view(), name='post-detail'),
+
+    # CRUD operations
+    path('post/new/', views.PostCreateView.as_view(), name='post-create'),
+    path('post/<int:pk>/update/', views.PostUpdateView.as_view(), name='post-update'),
+    path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post-delete'),
+]
