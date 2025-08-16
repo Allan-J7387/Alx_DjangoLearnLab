@@ -149,3 +149,16 @@ def post_list(request):
         posts = posts.distinct()  # avoid duplicates if multiple filters match
 
     return render(request, "blog/post_list.html", {"posts": posts})
+
+
+from django.views.generic import ListView
+from .models import BlogPost
+
+class PostByTagListView(ListView):
+    model = BlogPost
+    template_name = "blog/post_list.html"  # reuse your post list template
+    context_object_name = "posts"
+
+    def get_queryset(self):
+        tag_slug = self.kwargs.get("tag_slug")
+        return BlogPost.objects.filter(tags__slug=tag_slug).distinct()
