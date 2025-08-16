@@ -68,6 +68,21 @@ TEMPLATES = [
     },
 ]
 
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "blog" / "static"]
+
+# ✅ new for user-uploaded profile pictures
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# Auth flow
+LOGIN_REDIRECT_URL = 'profile'          # after login go to profile
+LOGOUT_REDIRECT_URL = 'login'           # after logout go to login
+LOGIN_URL = 'login'                     # login required redirects here
+
+# Security niceties (good defaults for dev; harden further in prod)
+CSRF_COOKIE_HTTPONLY = True
+SESSION_COOKIE_HTTPONLY = True
 WSGI_APPLICATION = 'django_blog.wsgi.application'
 
 
