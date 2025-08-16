@@ -129,3 +129,23 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_success_url(self):
         return self.object.post.get_absolute_url()
+
+from django.shortcuts import render
+from .models import BlogPost  # or Post if your model is named that
+
+def post_list(request):
+    query = request.GET.get("q")  # get the search keyword from ?q=
+    posts = BlogPost.objects.all()
+
+    if query:
+        posts = BlogPost.objects.filter(
+            title__icontains=query
+        ) | BlogPost.objects.filter(
+            content__icontains=query
+        ) | BlogPost.objects.filter(
+            tags__name__icontains=query
+        )
+
+        posts = posts.distinct()  # avoid duplicates if multiple filters match
+
+    return render(request, "blog/post_list.html", {"posts": posts})
