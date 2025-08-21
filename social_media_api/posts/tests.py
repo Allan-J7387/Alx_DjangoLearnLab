@@ -33,3 +33,11 @@ class PostCommentAPITests(APITestCase):
         c2.force_authenticate(other)
         res = c2.patch(f'/api/posts/{post.id}/', {'title': 'Hacked'}, format='json')
         self.assertEqual(res.status_code, 403)
+
+def test_like_and_unlike(self):
+    res = self.client.post(f'/api/posts/{self.post.id}/like/')
+    self.assertEqual(res.status_code, 201)
+    res2 = self.client.post(f'/api/posts/{self.post.id}/like/')
+    self.assertEqual(res2.status_code, 400)  # cannot like twice
+    res3 = self.client.post(f'/api/posts/{self.post.id}/unlike/')
+    self.assertEqual(res3.status_code, 200)

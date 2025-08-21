@@ -66,3 +66,40 @@ class FeedView(generics.GenericAPIView):
 
         serializer = self.get_serializer(posts, many=True)
         return Response(serializer.data)
+
+from rest_framework.decorators import action
+from rest_framework import status
+from .models import Like
+from .serializers import LikeSerializer
+from notifications.models import Notification
+from django.contrib.contenttypes.models import ContentType
+
+class PostViewSet(viewsets.ModelViewSet):
+    # (existing code...)
+
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def like(self, request, pk=None):
+        post = self.get_object()
+        like, created = Like.objects.get_or_create(post=post, user=request.user)
+        if not created:
+            return Response({"detail": "Already liked"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # create notification for post author
+        if post.author != request.user:
+            Notification.objects.create(
+                recipient=post.author,
+                actor=request.user,
+                verb="liked your post",
+                target=post,
+            )
+        return Response(LikeSerializer(like).data, status=status.HTTP_201_CREATED)
+
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def unlike(self, request, pk=None):
+        post = self.get_object()
+        try:
+            like = Like.objects.get(post=post, user=request.user)
+            like.delete()
+            return Response({"detail": "Unliked"}, status=status.HTTP_200_OK)
+        except Like.DoesNotExist:
+            return Response({"detail": "You have not liked this post"}, status=status.HTTP_400_BAD_REQUEST)

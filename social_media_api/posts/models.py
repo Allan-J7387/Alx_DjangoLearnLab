@@ -29,3 +29,22 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment by {getattr(self.author, 'username', self.author_id)} on {self.post_id}"
+
+
+from django.conf import settings
+from django.db import models
+
+User = settings.AUTH_USER_MODEL
+
+# ... (Post, Comment already defined)
+
+class Like(models.Model):
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='likes')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='likes')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('post', 'user')  # prevent duplicate likes
+
+    def __str__(self):
+        return f"{self.user} liked {self.post}"

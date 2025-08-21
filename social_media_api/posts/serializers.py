@@ -40,3 +40,13 @@ class PostSerializer(serializers.ModelSerializer):
     def get_latest_comments(self, obj):
         qs = obj.comments.order_by('-created_at')[:3]
         return CommentSerializer(qs, many=True).data
+
+from .models import Post, Comment, Like
+
+class LikeSerializer(serializers.ModelSerializer):
+    user = UserMiniSerializer(read_only=True)
+
+    class Meta:
+        model = Like
+        fields = ['id', 'post', 'user', 'created_at']
+        read_only_fields = ['user', 'created_at']
