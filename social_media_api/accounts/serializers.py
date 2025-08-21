@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class RegisterSerializer(serializers.ModelSerializer):
-    # Explicit CharField for password
+    # Explicit password field with CharField
     password = serializers.CharField(write_only=True)
 
     class Meta:
@@ -19,11 +19,11 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ['username', 'email', 'password']
 
     def create(self, validated_data):
-        # Use create_user (handles hashing automatically)
-        user = User.objects.create_user(
+        # Use Django’s create_user method for proper password hashing
+        user = get_user_model().objects.create_user(
             username=validated_data['username'],
             email=validated_data.get('email', ''),
             password=validated_data['password']
         )
-        Token.objects.create(user=user)  # Auto-generate token
+        Token.objects.create(user=user)  # generate auth token for the new user
         return user
