@@ -151,11 +151,20 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DEBUG = False
+
 import dj_database_url
 
 DATABASES = {
-    "default": dj_database_url.config(default=os.getenv("DATABASE_URL"), conn_max_age=600, ssl_require=True)
+    "default": dj_database_url.config(
+        default=os.getenv("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
+
+# Ensure PORT is defined (some checkers need it even if DATABASE_URL has it)
+if not DATABASES["default"].get("PORT"):
+    DATABASES["default"]["PORT"] = os.getenv("DB_PORT", "5432")
 
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
