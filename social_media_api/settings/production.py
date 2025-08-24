@@ -58,3 +58,6 @@ LOGGING['root'] = {
 'handlers': ['console', 'file'],
 'level': 'INFO',
 }
+
+DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+

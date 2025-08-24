@@ -1,0 +1,5 @@
+[Service]
+...
+EnvironmentFile=/home/ubuntu/app/.env
+Environment="DJANGO_SETTINGS_MODULE=social_media_api.settings.production"
+ExecStart=/home/ubuntu/venv/bin/gunicorn -c /home/ubuntu/app/gunicorn.conf.py social_media_api.wsgi:application
