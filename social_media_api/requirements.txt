@@ -306,9 +306,13 @@ zipp==1.0.0
 zope.event==4.4
 zope.interface==5.5.2
 zstandard==0.20.0
+django
+djangorestframework
+whitenoise
 gunicorn
 psycopg2-binary
-whitenoise
-python-decouple
-django-storages[boto3]
+python-dotenv
+dj-database-url
+django-cors-headers
 boto3
+django-storages
